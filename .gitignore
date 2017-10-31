@@ -58,4 +58,4 @@ typings/
 .env
 
 app/dist
-js/script.js
+app/js/script.js
