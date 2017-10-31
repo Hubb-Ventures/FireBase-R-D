@@ -3,16 +3,16 @@ module.exports = function(grunt){
 	grunt.initConfig({
 		concat:{
 			js: {
-				src: ['bower_components/jquery/dist/*.min.js'],
-				dest: 'views/dist/jquery.min.js'
+				src: ['bower_components/**/dist/*.min.js'],
+				dest: 'app/dist/jquery.min.js'
 			},
 			dist:{
-				src: ['views/js/*.js'],
-				dest: 'views/js/script.js'
+				src: ['app/js/*.js'],
+				dest: 'app/js/script.js'
 			},
 			watch: {
 				dist: {
-					files: ['views/js/*.js'],
+					files: ['app/js/*.js'],
 					tasks: ['concat']
 				}
 			}
