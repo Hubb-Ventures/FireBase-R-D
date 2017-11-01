@@ -1,0 +1,34 @@
+<form id="form3">
+    <h3 class="heading"> Headers </h3>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <div id="dropdown">
+            <label for="dropDownSelect1">First Name </label>
+            <select id="dropDownSelect1" class="form-control" ng-model="selectedName1" ng-change="select1(selectedName1)" ng-options="x for x in headers.headers">
+						<option value = ""></option>
+                </select>
+        </div>
+        <div id="dropdown2">
+            <label for="dropDownSelect2">City </label>
+            <select id="dropDownSelect2" class="form-control" ng-model="selectedName2" ng-change="select2(selectedName2)" ng-options="x for x in headers.headers">
+					</select>
+        </div>
+        <div id="dropdown3">
+            <label for="dropDownSelect3">Age</label>
+            <select id="dropDownSelect3" class="form-control" ng-model="selectedName3" ng-change="select3(selectedName3)" ng-options="x for x in headers.headers">
+					</select>
+        </div>
+        <div id="dropdown4">
+            <label for="dropDownSelect4">State</label>
+            <select id="dropDownSelect4" class="form-control" ng-model="selectedName4" ng-change="select4(selectedName4)" ng-options="x for x in headers.headers">
+					</select>
+        </div>
+        <div id="dropdown5">
+            <label for="dropDownSelect5">Country</label>
+            <select id="dropDownSelect5" class="form-control" ng-model="selectedName5" ng-change="select5(selectedName5)" ng-options="x for x in headers.headers">
+					</select>
+        </div>
+        <br>
+        <input type='button' id='btnLoad' class="btn btn-default" value='Next Page!!' ng-click="data()">
+        <br>
+    </div>
+</form>
