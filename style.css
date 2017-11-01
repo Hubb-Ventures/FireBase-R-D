@@ -1,0 +1,259 @@
+/* .sidebar {
+        width: 250px;
+        height: calc(100vh - 60px);
+   }
+
+   .sidebar .nav li a {
+      padding: 20px 0;
+      display: table;
+      width: 100%;
+   } 
+
+   .sidebar .nav li a .iconHolder {
+      float: left;
+      width: 60px;
+      text-align: center;
+   }
+   .sidebar .nav li a .iconHolder .fa {
+      margin: auto;
+      padding: 10px 0;
+   }
+   .sidebar .nav li a .title {
+      font-size: 16px;
+      float: left;
+      width: calc(100% - 60px);
+      margin: 0;
+      padding: 10px 0;
+   }
+*/
+
+@media only screen and ( max-width: 768px) {
+    .header .navbar-default {
+        background-color: #0093cf;
+    }
+    .navbar {
+        margin-bottom: 0px;
+        width: 100%;
+    }
+    .navbar-right {
+        margin-right: 0px !important;
+    }
+    .navbar-default .navbar-nav>li>a {
+        color: white;
+    }
+    .titleHead {
+        width: calc(100% - (200px + 100px));
+        float: left;
+        text-align: center;
+    }
+    .titleHead p {
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        padding-top: 10px;
+    }
+    .rightHead {
+        width: 100px;
+        float: left;
+    }
+    .section2 {
+        width: 100%;
+        min-height: calc(100vh - 50px);
+        box-shadow: 0px 0px 5px #888888;
+    }
+    .sidebar.collapsed {
+        width: 100%;
+        float: left;
+    }
+    .navbar-header {
+        width: 200px;
+        float: left;
+    }
+    .content {
+        width: 100%;
+        float: left;
+        padding-left: 20px;
+    }
+    .navbar-header li a .iconHolder {
+        float: none;
+        text-align: center;
+        color: white;
+    }
+    .sidebar.collapsed .nav li a {
+        padding: 10px 0;
+        color: grey;
+    }
+    .sidebar.collapsed .nav li a:hover,
+    .sidebar.collapsed .nav li a:focus,
+    .sidebar.collapsed .nav li a:active {
+        color: #0093cf;
+        border: 1px solid #0093cf;
+    }
+    .sidebar.collapsed .nav li a .iconHolder {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    .sidebar.collapsed .nav li a .iconHolder .fa {
+        margin: auto;
+        font-size: 32px;
+    }
+    .sidebar.collapsed .nav li a .title {
+        font-size: 12px;
+        float: none;
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        padding: 10px 0 0;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .header .navbar-default {
+        background-color: #0093cf;
+    }
+    .navbar {
+        margin-bottom: 0px;
+        width: 100%;
+    }
+    .navbar-right {
+        margin-right: 0px !important;
+    }
+    .navbar-default .navbar-nav>li>a {
+        color: white;
+    }
+    .titleHead {
+        width: calc(100% - (200px + 200px));
+        float: left;
+        text-align: center;
+    }
+    .titleHead p {
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        padding-top: 10px;
+    }
+    .rightHead {
+        width: 200px;
+        float: left;
+    }
+    .section2 {
+        width: 100%;
+        min-height: calc(100vh - 50px);
+        box-shadow: 0px 0px 5px #888888;
+    }
+    .sidebar.collapsed {
+        height: calc(100vh - 50px);
+        box-shadow: 0px 0px 8px #888888;
+    }
+    .sidebar.collapsed,
+    .navbar-header {
+        width: 200px;
+        float: left;
+    }
+    #contentView {
+        height: calc(100vh - 50px);
+        text-align: center;
+        display: block;
+        padding: 20px;
+        width: auto;
+        margin: auto;
+    }
+    .content {
+        width: calc(100% - 200px);
+        float: left;
+        padding-left: 20px;
+        height: calc(100vh - 50px);
+    }
+    .navbar-header li a .iconHolder {
+        float: none;
+        text-align: center;
+        color: white;
+    }
+    .sidebar.collapsed .nav li a {
+        padding: 10px 0;
+        color: grey;
+    }
+    .sidebar.collapsed .nav li a:hover,
+    .sidebar.collapsed .nav li a:focus,
+    .sidebar.collapsed .nav li a:active {
+        color: #0093cf;
+        border: 1px solid #0093cf;
+    }
+    .sidebar.collapsed .nav li a .iconHolder {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    .sidebar.collapsed .nav li a .iconHolder .fa {
+        margin: auto;
+        font-size: 32px;
+    }
+    .sidebar.collapsed .nav li a .title {
+        font-size: 12px;
+        float: none;
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        padding: 10px 0 0;
+    }
+    #form1,
+    #form2 {
+        height: calc(100vh - 70px);
+    }
+    .form1h,
+    .inputForm,
+    #form1,
+    #form2 {
+        text-align: center;
+        display: block;
+        padding: 20px;
+        width: auto;
+        margin: auto;
+    }
+    input[type=file] {
+        margin: auto;
+        padding-top: 20px;
+        padding-left: 70px;
+    }
+    #btnLoad {
+        float: right;
+    }
+    th,
+    td {
+        border: 1px solid black;
+    }
+    table,
+    .table {
+        text-align: center;
+        width: calc(100vw - 200px);
+    }
+    td {
+        height: 50px;
+        text-align: center;
+    }
+    th {
+        font-weight: bold;
+        height: 50px;
+        text-align: center;
+    }
+    #form2 {
+        text-align: center;
+        width: 50%;
+        margin: 0 auto;
+    }
+    fieldset {
+        display: block;
+        margin-left: 2px;
+        margin-right: 2px;
+        padding-top: 0.35em;
+        padding-bottom: 0.625em;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        border: 2px #908ea7 solid;
+        border-radius: 10px;
+    }
+    /* #uploadButton {
+        float: right;
+    } */
+}

@@ -1,0 +1,10 @@
+<table class="table">
+    <th ng-repeat="header in colHeaders">{{ header }}</th>
+    <tr ng-repeat="x in headers">
+        <td ng-repeat="header in colHeaders">
+            {{ x[header] }}
+        </td>
+    </tr>
+</table>
+<br>
+<input type='button' id='btnLoad' class="btn btn-default" value='Save'>
