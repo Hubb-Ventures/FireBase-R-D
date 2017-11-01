@@ -60,4 +60,3 @@ typings/
 
 # Unused or unconfigured
 app/routes.js
-config/
