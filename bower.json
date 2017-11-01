@@ -1,0 +1,21 @@
+{
+  "name": "uploadanddispatch",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Abhishek Piedy"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Hubb-Ventures/UploadAndDispatch",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
