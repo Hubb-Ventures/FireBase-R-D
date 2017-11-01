@@ -15,6 +15,7 @@ fileCheck.use(function(req, res, next) {
 				res.status(400).send({"msg": "No file for the given file ID."});
 			}
 			else {
+				// TODO: handle error in case no file turns up
 				if( file.userId == uid ) {
 					next();
 				}

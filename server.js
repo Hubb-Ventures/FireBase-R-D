@@ -41,7 +41,7 @@ db.once('open', function() {
 	app.get('/file/map', fileService.sendMap);
 
 	app.get('*', function(req, res) {
-		res.senfile('./public/views/index.html');
+		res.sendFile('./public/index.html');
 	});
 
 });

@@ -5,24 +5,24 @@
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
         when('/login', {
-            templateUrl: 'Views/userView.html',
+            templateUrl: '../views/userView.html',
             controller: 'userCtrl',
         }).
         when('/attachFile', {
-            templateUrl: 'Views/fileView.html',
+            templateUrl: '../views/fileView.html',
             controller: 'formCtrl',
         }).
 
         when('/viewHistory', {
-            templateUrl: 'Views/historyView.html',
+            templateUrl: '../views/historyView.html',
             controller: 'customersCtrl',
         }).
         when('/page2', {
-            templateUrl: 'Views/mapperView.html',
+            templateUrl: '../views/mapperView.html',
             controller: 'myCtrl',
         }).
         when('/page3', {
-            templateUrl: 'Views/tableView.html',
+            templateUrl: '../views/tableView.html',
             controller: 'tableCtrl',
         }).
 
