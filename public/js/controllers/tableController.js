@@ -5,10 +5,10 @@
         .controller('tableCtrl', tableCtrl);
 
     function tableCtrl($scope, $http, $window) {
-        var accessid = $window.my_value;
-        console.log(Object.values(accessid)[0]);
+        var accessid = $window.uid;
+       // console.log(Object.values(accessid)[0]);
         var fileid = $window.fid;
-        console.log(Object.values(fileid)[0]);
+        //console.log(Object.values(fileid)[0]);
         $http({
                 method: "GET",
                 url: "http://192.168.1.159:3000/file/map",

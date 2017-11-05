@@ -1,28 +1,28 @@
-<form id="form3">
+<form id="mappingForm" class = "form-group">
     <h3 class="heading"> Headers </h3>
     <div ng-app="myApp" ng-controller="myCtrl">
-        <div id="dropdown">
+        <div id="dropdown" class="form-group">
             <label for="dropDownSelect1">First Name </label>
             <select id="dropDownSelect1" class="form-control" ng-model="selectedName1" ng-change="select1(selectedName1)" ng-options="x for x in headers.headers">
 						<option value = ""></option>
                 </select>
         </div>
-        <div id="dropdown2">
+        <div id="dropdown2" class="form-group">
             <label for="dropDownSelect2">City </label>
             <select id="dropDownSelect2" class="form-control" ng-model="selectedName2" ng-change="select2(selectedName2)" ng-options="x for x in headers.headers">
 					</select>
         </div>
-        <div id="dropdown3">
+        <div id="dropdown3" class="form-group">
             <label for="dropDownSelect3">Age</label>
             <select id="dropDownSelect3" class="form-control" ng-model="selectedName3" ng-change="select3(selectedName3)" ng-options="x for x in headers.headers">
 					</select>
         </div>
-        <div id="dropdown4">
+        <div id="dropdown4" class="form-group">
             <label for="dropDownSelect4">State</label>
             <select id="dropDownSelect4" class="form-control" ng-model="selectedName4" ng-change="select4(selectedName4)" ng-options="x for x in headers.headers">
 					</select>
         </div>
-        <div id="dropdown5">
+        <div id="dropdown5" class="form-group">
             <label for="dropDownSelect5">Country</label>
             <select id="dropDownSelect5" class="form-control" ng-model="selectedName5" ng-change="select5(selectedName5)" ng-options="x for x in headers.headers">
 					</select>

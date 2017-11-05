@@ -11,7 +11,7 @@
             })
             .then(function mySuccess(response) {
                 $scope.headers = response.data;
-                console.log($scope.headers);
+                //console.log($scope.headers);
                 $scope.colHeaders = Object.keys($scope.headers[0])
             }, function myError(response) {
                 $scope.names = response.statusText;

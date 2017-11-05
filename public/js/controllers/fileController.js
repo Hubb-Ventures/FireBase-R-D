@@ -26,8 +26,8 @@
             var formData = new FormData();
             formData.append('userFile', file);
             formData.append('uid', Object.values(uid));
-            console.log(Object.values(uid));
-            console.log(formData);
+            // console.log(Object.values(uid));
+            // console.log(formData);
 
 
             $http.post(uploadUrl, formData, {
@@ -53,16 +53,16 @@
                 $scope.myFile = element.files[0];
                 $scope.FileMessage = '';
                 var filename = $scope.myFile.name;
-                console.log(filename.length)
+                //console.log(filename.length)
                 var index = filename.lastIndexOf(".");
-                console.log($window.my_value);
+                //console.log($window.my_value);
                 var strsubstring = filename.substring(index, filename.length);
 
                 if (strsubstring == '.csv' || strsubstring == '.xlsx' || strsubstring == '.xls') {
-                    console.log('File Uploaded sucessfully');
+                   // console.log('File Uploaded sucessfully');
                 } else {
                     element.value = '';
-                    console.log('Please select correct file format');
+                   // console.log('Please select correct file format');
                     // $scope.myFile = '';
                     $scope.FileMessage = 'Please upload correct File with extensions .csv, .xlsx or .xls';
                 }
@@ -72,9 +72,9 @@
         //uploading file
         $scope.uploadFile = function() {
             var file = $scope.myFile;
-            var uid = $window.my_value;
+            var uid = $window.uid;
             var uploadUrl = "http://192.168.1.159:3000/upload/file";
-            console.log(uid);
+            //console.log(uid);
             fileUpload.uploadFileToUrl(file, uid, uploadUrl);
         };
 

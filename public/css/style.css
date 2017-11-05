@@ -153,10 +153,9 @@
     }
     #contentView {
         height: calc(100vh - 50px);
-        text-align: center;
         display: block;
         padding: 20px;
-        width: auto;
+        width: 60%;
         margin: auto;
     }
     .content {
@@ -197,7 +196,7 @@
         text-align: center;
         padding: 10px 0 0;
     }
-    #form1,
+    /*#form1,
     #form2 {
         height: calc(100vh - 70px);
     }
@@ -219,30 +218,15 @@
     #btnLoad {
         float: right;
     }
-    th,
-    td {
-        border: 1px solid black;
-    }
-    table,
-    .table {
-        text-align: center;
-        width: calc(100vw - 200px);
-    }
-    td {
-        height: 50px;
-        text-align: center;
-    }
-    th {
-        font-weight: bold;
-        height: 50px;
-        text-align: center;
-    }
+   .table-wrapper {
+    overflow-x: auto;
+   }
     #form2 {
         text-align: center;
         width: 50%;
         margin: 0 auto;
-    }
-    fieldset {
+    }*/
+/*    fieldset {
         display: block;
         margin-left: 2px;
         margin-right: 2px;
@@ -252,7 +236,7 @@
         padding-right: 0.75em;
         border: 2px #908ea7 solid;
         border-radius: 10px;
-    }
+    }*/
     /* #uploadButton {
         float: right;
     } */
