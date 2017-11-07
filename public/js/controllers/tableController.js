@@ -4,23 +4,33 @@
         .module('myApp')
         .controller('tableCtrl', tableCtrl);
 
-    function tableCtrl($scope, $http, $window) {
-        var accessid = $window.uid;
-       // console.log(Object.values(accessid)[0]);
-        var fileid = $window.fid;
-        //console.log(Object.values(fileid)[0]);
+    function tableCtrl($scope, $http) {
+       var uid = JSON.parse(localStorage.getItem("uid"));
+        var fid = JSON.parse(localStorage.getItem("fid"));
+        $scope.columns = [{ field: 'customerName', displayName: 'First Name'}, 
+        { field: 'amount', displayName:"Amount"},
+        { field: 'gst', displayName:"GST"},
+        { field: 'amountWGST', displayName:"AGST"},
+        { field: 'invoiceNumber', displayName:"Invoice #"}
+        // {  field: 'processedAt', displayName: "Date", cellFilter: 'date:"medium"',width : '20%'}
+        ];
+      
+  
+        $scope.gridOptions = {  enableSorting: true,
+    columnDefs: $scope.columns };
+                       
         $http({
                 method: "GET",
-                url: "http://192.168.1.159:3000/file/map",
+                url: "http://localhost:3000/file/map",
                 headers: {
-                    'access-id': Object.values(accessid)[0],
-                    'fid': Object.values(fileid)[0]
+                    'access-id': uid[0].uid,
+                    'fid': fid[0].fid
                 }
             })
             .then(function mySuccess(response) {
-                $scope.headers = response.data;
-                console.log($scope.headers);
-                $scope.colHeaders = Object.keys($scope.headers[0])
+                $scope.gridOptions.data = response.data;
+                 console.log($scope.gridOptions.data);
+                // $scope.colHeaders = Object.keys($scope.myTableData[0])
             }, function myError(response) {
                 $scope.names = response.statusText;
             });

@@ -20,12 +20,12 @@
     }]);
 
 
-    app.service('fileUpload', ['$http', '$location', '$window', function($http, $location, $window) {
+    app.service('fileUpload', ['$http', '$location', function($http, $location) {
 
-        this.uploadFileToUrl = function(file, uid, uploadUrl) {
+        this.uploadFileToUrl = function(file, Uid, uploadUrl) {
             var formData = new FormData();
             formData.append('userFile', file);
-            formData.append('uid', Object.values(uid));
+            formData.append('uid', Uid);
             // console.log(Object.values(uid));
             // console.log(formData);
 
@@ -35,9 +35,12 @@
                 })
                 .then(function mySuccess(response) {
                     console.log(response.data);
-                    $window.fid = response.data;
-                    $location.path("/page2");
-                    $window.fid = response.data;
+                        var fid =[];
+                        fid.push(response.data);
+                        localStorage.setItem("fid", JSON.stringify(fid));
+                        fid = JSON.parse(localStorage.getItem("fid"));
+                        console.log(fid[0].fid);
+                        $location.path("/page2");
 
                 }, function myError(response) {
                     console.log(response);
@@ -46,7 +49,7 @@
         }
     }]);
 
-    app.controller('formCtrl', ['$scope', 'fileUpload', '$window', function($scope, fileUpload, $window) {
+    app.controller('formCtrl', ['$scope', 'fileUpload', function($scope, fileUpload) {
         //validation
         $scope.setFile = function(element) {
             $scope.$apply(function($scope) {
@@ -72,10 +75,12 @@
         //uploading file
         $scope.uploadFile = function() {
             var file = $scope.myFile;
-            var uid = $window.uid;
-            var uploadUrl = "http://192.168.1.159:3000/upload/file";
-            //console.log(uid);
-            fileUpload.uploadFileToUrl(file, uid, uploadUrl);
+            var uid = JSON.parse(localStorage.getItem("uid"));
+            console.log(uid);
+            var Uid = uid[0].uid;
+            var uploadUrl = "http://localhost:3000/upload/file";
+            console.log(Uid);
+            fileUpload.uploadFileToUrl(file, Uid, uploadUrl);
         };
 
     }]);

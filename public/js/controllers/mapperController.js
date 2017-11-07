@@ -2,24 +2,26 @@
     'use strict';
     var app = angular.module("myApp");
 
-    app.controller('myCtrl', function($scope, $http, $location, $window) {
+    app.controller('myCtrl', function($scope, $http, $location) {
 
         // console.log($window.my_value);
         // console.log($window.fid);
 
-        var accessid = $window.uid;
+        // var accessid = $window.uid;
         //console.log(Object.values(accessid)[0]);
-        var fileid = $window.fid;
+        // var fileid = $window.fid;
         //console.log(Object.values(fileid)[0]);
-
+        var uid = JSON.parse(localStorage.getItem("uid"));
+        var fid = JSON.parse(localStorage.getItem("fid"));
+        
         let header = {
-            'access-id': Object.values(accessid),
-            'fid': Object.values(fileid)
+            'access-id': uid[0].uid,
+            'fid': fid[0].fid
         };
 
         $http({
             method: "GET",
-            url: "http://192.168.1.159:3000/file/getHeaders",
+            url: "http://localhost:3000/file/getHeaders",
             headers: header,
         }).then(function mySuccess(response) {
             $scope.headers = response.data;
@@ -79,17 +81,17 @@
             //console.log($scope.array);
         var headerValues = {};
         $scope.data = function() {
-            headerValues.uid = Object.values(accessid)[0];
+            headerValues.uid = uid[0].uid;
             headerValues[$scope.labels[0]] = select1;
             headerValues[$scope.labels[1]] = select2;
             headerValues[$scope.labels[2]] = select3;
             headerValues[$scope.labels[3]] = select4;
             headerValues[$scope.labels[4]] = select5;
-            headerValues.fid = Object.values(fileid)[0];
+            headerValues.fid = fid[0].fid;
 
             console.log(headerValues);
             $http({
-                    url: "http://192.168.1.159:3000/file/map",
+                    url: "http://localhost:3000/file/map",
                     method: "POST",
                     data: angular.toJson(headerValues),
                     headers: {

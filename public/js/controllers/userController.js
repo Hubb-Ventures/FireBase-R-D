@@ -3,7 +3,7 @@
     var app = angular.module("myApp");
 
 
-    app.controller('userCtrl', function($scope, $http, $location, $window) {
+    app.controller('userCtrl', function($scope, $http, $location) {
 
         $scope.user = function() {
             
@@ -15,9 +15,11 @@
                 email: $scope.id,
                 password: $scope.passwrd
             };
+
+
             //console.log(body);
             $http({
-                    url: "http://192.168.1.159:3000/login",
+                    url: "http://localhost:3000/login",
                     method: "POST",
                     data: JSON.stringify(body),
                     headers: {
@@ -27,9 +29,16 @@
                 .then(function mySuccess(response) {
                         console.log("success login");
                         console.log(response.data);
-                        $window.uid = response.data;
+
+                        
+                        var uid =[];
+                        uid.push(response.data);
+                        localStorage.setItem("uid", JSON.stringify(uid));
+                        uid = JSON.parse(localStorage.getItem("uid"));
+                       
+                        //$window.uid = response.data;
                         $location.path("/attachFile");
-                        console.log($window.uid);
+                         console.log(uid[0].uid);
                     },
                     function(error) {
                         console.log(error);
