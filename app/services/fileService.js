@@ -44,7 +44,6 @@ module.exports.getHeaders = function(req,res) {
 }
 
 module.exports.map = function(req, res) {
-	console.log(req.body);
 	var promise = Files.findById(req.body.fid).exec();
 	promise.then(function(file) {
 		workbook.xlsx.read(bufferToStream(file.data))

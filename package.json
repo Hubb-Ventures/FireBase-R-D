@@ -13,6 +13,7 @@
   "author": "Abhishek Piedy",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "dotenv": "^4.0.0",
     "exceljs": "^0.6.1",
     "express": "^4.16.1",

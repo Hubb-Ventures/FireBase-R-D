@@ -1,6 +1,11 @@
-let Users = require('../db/models/users');
+let Users = require('../db/models/users'),
+	Files = require('../db/models/files');
 
-let jwt = require('jsonwebtoken');
+let jwt = require('jsonwebtoken'),
+	mongoose = require('mongoose'),
+	Promise = require('bluebird');
+
+mongoose.Promise = Promise;
 
 module.exports.signup = function(req, res) {
 	let user = new Users();
@@ -47,4 +52,13 @@ module.exports.login = function(req, res) {
 			}
 		})
 	}
+}
+
+module.exports.getFiles = function(uid) {
+	return new Promise(function(resolve, reject) {
+		let promise = Files.find({ userId: uid }).exec();
+		promise.then(function(files) {
+			resolve(files);
+		});
+	});
 }

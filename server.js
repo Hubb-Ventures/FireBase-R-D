@@ -3,6 +3,7 @@ var express = require('express'),
 	router = express.Router(),
 	upload = require('./app/middleware/upload'),
 	fileCheck = require('./app/middleware/fileCheck'),
+	// invoice = require('./app/middleware/invoice'),
 	uploadService = require('./app/services/uploadService'),
 	fileService = require('./app/services/fileService'),
 	userService = require('./app/services/userService'),
@@ -39,9 +40,10 @@ db.once('open', function() {
 	app.get('/file/getheaders', fileService.getHeaders);
 	app.post('/file/map', fileService.map);
 	app.get('/file/map', fileService.sendMap);
+	app.get('/history', invoiceService.history);
 
 	app.get('*', function(req, res) {
-		res.sendFile('./public/index.html');
+		res.sendFile(__dirname + '/public/index.html');
 	});
 
 });

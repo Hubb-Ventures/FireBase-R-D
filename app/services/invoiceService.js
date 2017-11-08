@@ -1,40 +1,40 @@
-let	Users = require('../db/models/users');
+let	Invoices = require('../db/models/invoices'),
+	Files = require('../db/models/files');
 
-module.exports.addLog = function(req, res) {
-	let invoiceLog = new InvoiceLogs();
+let userService = require('./userService');
 
-	invoiceLog.period = req.body.period;
+let mongoose = require('mongoose'),
+	Promise = require('bluebird'),
+	async = require('async');
 
-	Users.find({ email: req.body.email }, function(err, users) {
-		if(err) {
-			console.log(err);
-		}
-		else {
-			invoiceLog.userID = users[0]._id;
-		}
-	});
+mongoose.Promise = Promise;
 
-	Companies.find({ companyName: req.body.cname }, function(err, companies) {
-		if(err) {
-			console.log(err);
-		}
-		else {
-			invoiceLog.companyID = companies[0]._id;
-		}
-	});
-
-	invoiceLog.save(function(err) {
-		if(err){
-			if(err.name === 'MongoError' && err.code === 11000) {
-				return res.status(200).send({"msg":"Account exists!"});
-			}
-			else {
-				console.log(err.message);
-				return res.status(500).send({"msg": "Internal error!"});
-			}
-		}
-		else {
-			res.status(200).send({"msg": "Successfully added Invoice Log."});
-		}
-	});
+module.exports.history = function(req, res) {
+	if (req.headers['access-id']) {
+		let fids = 25;
+		var userInvoices = [];
+		userService.getFiles(req.headers['access-id'])
+		.then(function(files) {
+			let s = ['1','2','3'];
+			async.forEach(files, function(item, callback) {
+				let invoicePromise = Invoices.find({ fileId: item._id }).exec();
+				invoicePromise.then(function(invoices) {
+					userInvoices = userInvoices.concat(invoices);
+				})
+				.then(function() {
+					callback();
+				});
+			}, err => {
+				if(!err) {
+					res.status(200).send(userInvoices);
+				}
+				else {
+					res.status(500).send({"msg": "You broke the server!!"});
+				}
+			});
+		});
+	}
+	else {
+		res.status(400).send({"msg": "No user ID was specified."});
+	}
 }
