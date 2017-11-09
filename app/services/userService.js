@@ -40,15 +40,15 @@ module.exports.login = function(req, res) {
 					var response = {user: users[0].toJSON()};
 					var token = jwt.sign(response,process.env.SECRET);
 					response.token = token;
-					delete response.user.password;
-					res.status(200).send({"uid":response.user._id});
+					delete response.user;
+					res.status(200).send(response);
 				}
 				else {
-					res.status(401).send({"msg": "Invalid details."});
+					res.status(401).send({"msg": "The password doesn't match."});
 				}
 			}
 			else {
-				res.status(401).send({"msg": "Invalid details."});
+				res.status(401).send({"msg": "The email doesn't exist in our records."});
 			}
 		})
 	}

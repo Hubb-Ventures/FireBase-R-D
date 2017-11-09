@@ -2,8 +2,8 @@ var express = require('express'),
 	app = express(),
 	router = express.Router(),
 	upload = require('./app/middleware/upload'),
+	tokenAuth = require('./app/middleware/tokenAuthenticate'),
 	fileCheck = require('./app/middleware/fileCheck'),
-	// invoice = require('./app/middleware/invoice'),
 	uploadService = require('./app/services/uploadService'),
 	fileService = require('./app/services/fileService'),
 	userService = require('./app/services/userService'),
@@ -34,13 +34,14 @@ db.once('open', function() {
 
 	app.post('/signup', userService.signup);
 	app.post('/login', userService.login);
-	app.use('/upload*', upload);
-	app.post('/upload/file', uploadService.upload);
-	app.use('/file*', fileCheck);
-	app.get('/file/getheaders', fileService.getHeaders);
-	app.post('/file/map', fileService.map);
-	app.get('/file/map', fileService.sendMap);
-	app.get('/history', invoiceService.history);
+	app.use('/auth*', tokenAuth);
+	app.use('/auth/upload*', upload);
+	app.post('/auth/upload/file', uploadService.upload);
+	app.use('/auth/file*', fileCheck);
+	app.get('/auth/file/getheaders', fileService.getHeaders);
+	app.post('/auth/file/map', fileService.map);
+	app.post('/auth/file/saveinvoices', invoiceService.save);
+	app.get('/auth/history', invoiceService.history);
 
 	app.get('*', function(req, res) {
 		res.sendFile(__dirname + '/public/index.html');

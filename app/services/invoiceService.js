@@ -10,12 +10,10 @@ let mongoose = require('mongoose'),
 mongoose.Promise = Promise;
 
 module.exports.history = function(req, res) {
-	if (req.headers['access-id']) {
-		let fids = 25;
+	if (req.user) {
 		var userInvoices = [];
-		userService.getFiles(req.headers['access-id'])
+		userService.getFiles(req.user._id)
 		.then(function(files) {
-			let s = ['1','2','3'];
 			async.forEach(files, function(item, callback) {
 				let invoicePromise = Invoices.find({ fileId: item._id }).exec();
 				invoicePromise.then(function(invoices) {
@@ -24,11 +22,12 @@ module.exports.history = function(req, res) {
 				.then(function() {
 					callback();
 				});
-			}, err => {
+			}, (err) => {
 				if(!err) {
 					res.status(200).send(userInvoices);
 				}
 				else {
+					consoe.log(err);
 					res.status(500).send({"msg": "You broke the server!!"});
 				}
 			});
@@ -37,4 +36,8 @@ module.exports.history = function(req, res) {
 	else {
 		res.status(400).send({"msg": "No user ID was specified."});
 	}
+}
+
+module.exports.saveInvoices = function(req, res) {
+	console.log(req.body);
 }

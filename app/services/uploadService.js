@@ -9,13 +9,11 @@ module.exports.upload = function(req, res) {
 	file.data = req.file.buffer;
 	file.uploadedAt = Date.now();
 
-	console.log(req.body);
-
-	Users.findById(req.body.uid, function(err, user) {
-		if (req.body.uid != undefined) {
+	Users.findById(req.user._id, function(err, user) {
+		if (req.user._id != undefined) {
 			if(err){
 				console.log(err);
-				res.status(400).send({"msg": "No user for given credentials."});
+				res.status(401).send({"msg": "No user for given credentials."});
 			}
 			else {
 				file.userId = user._id;
@@ -31,7 +29,7 @@ module.exports.upload = function(req, res) {
 			}
 		}
 		else {
-			res.status(400).send({"msg": "Provide a user id please."});
+			res.status(400).send({"msg": "Provide a valid token please."});
 		}
 	});
 }
