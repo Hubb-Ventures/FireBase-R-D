@@ -28,7 +28,7 @@
                 })
                 .then(function mySuccess(response) {
                         console.log("success login");
-                        console.log(response.data);
+                       // console.log(response.data);
 
                         
                         var uid =[];
@@ -38,7 +38,7 @@
                        
                         //$window.uid = response.data;
                         $location.path("/attachFile");
-                         console.log(uid[0].uid);
+                         //console.log(uid[0].uid);
                     },
                     function(error) {
                         console.log(error);

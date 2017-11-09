@@ -35,7 +35,7 @@
 
         $scope.array = [];
         var select2, select1, select3, select4, select5;
-        $scope.labels = ["cname", "invNum", "amt", "gst", "agst"];
+        $scope.labels = ["cname", "amt", "gst", "agst", "invNum"];
         //console.log($scope.labels);
         $scope.obj = {};
         $scope.select1 = function(selectedName1) {
@@ -89,7 +89,7 @@
             headerValues[$scope.labels[4]] = select5;
             headerValues.fid = fid[0].fid;
 
-            console.log(headerValues);
+           // console.log(headerValues);
             $http({
                     url: "http://localhost:3000/file/map",
                     method: "POST",

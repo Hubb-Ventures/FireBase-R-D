@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/Hubb-Ventures/UploadAndDispatch/issues"
   },
-  "homepage": "https://github.com/Hubb-Ventures/UploadAndDispatch#readme"
+  "homepage": "https://github.com/Hubb-Ventures/UploadAndDispatch#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }

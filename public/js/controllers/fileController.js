@@ -34,12 +34,12 @@
                     headers: { 'Content-Type': undefined }
                 })
                 .then(function mySuccess(response) {
-                    console.log(response.data);
+                    //console.log(response.data);
                         var fid =[];
                         fid.push(response.data);
                         localStorage.setItem("fid", JSON.stringify(fid));
                         fid = JSON.parse(localStorage.getItem("fid"));
-                        console.log(fid[0].fid);
+                        //console.log(fid[0].fid);
                         $location.path("/page2");
 
                 }, function myError(response) {
@@ -76,10 +76,10 @@
         $scope.uploadFile = function() {
             var file = $scope.myFile;
             var uid = JSON.parse(localStorage.getItem("uid"));
-            console.log(uid);
+            //console.log(uid);
             var Uid = uid[0].uid;
             var uploadUrl = "http://localhost:3000/upload/file";
-            console.log(Uid);
+            //console.log(Uid);
             fileUpload.uploadFileToUrl(file, Uid, uploadUrl);
         };
 
