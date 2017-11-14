@@ -28,7 +28,7 @@ module.exports.history = function(req, res) {
 				}
 				else {
 					consoe.log(err);
-					res.status(500).send({"msg": "You broke the server!!"});
+					res.status(500).send({"msg": "Something is wrong with the system. try again later."});
 				}
 			});
 		});
@@ -39,5 +39,22 @@ module.exports.history = function(req, res) {
 }
 
 module.exports.saveInvoices = function(req, res) {
-	console.log(req.body);
+	var mappedInvoices = JSON.parse(req.body.Invoices);
+	mappedInvoices.forEach( function(invoice) {
+		// console.log(invoice);
+		let inv = new Invoices();
+		inv.fileId = req.headers['fid'];
+		inv.processedAt = Date.now();
+		inv.invoiceNumber = invoice.invoiceNumber;
+		inv.customerName = invoice.customerName;
+		inv.amount = invoice.amount;
+		inv.gst = invoice.gst;
+		inv.amountWGST = invoice.amountWGST;
+		inv.save(function(err) {
+			if(err) {
+				console.log(err);
+			}
+		});
+	});
+	res.status(200).send({"msg": "Successfully saved "+ mappedInvoices.length +" invoices."});
 }

@@ -5,6 +5,7 @@ let Files = require('../db/models/files'),
 	Users = require('../db/models/users');
 
 fileCheck.use(function(req, res, next) {
+	console.log("middleware", req.params);
 	let fid = req.headers['fid'] || req.body.fid;
 	let uid = req.user._id;
 	if( fid !== undefined) {

@@ -17,6 +17,9 @@ tokenCheck.use(function(req, res, next) {
 			}
 		})
 	}
+	else if( req.method === "OPTIONS") {
+		res.status(200).send({"msg": "Connected."});
+	}
 	else {
 		res.status(400).send({"msg": "No token"});
 	}

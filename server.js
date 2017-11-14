@@ -38,9 +38,11 @@ db.once('open', function() {
 	app.use('/auth/upload*', upload);
 	app.post('/auth/upload/file', uploadService.upload);
 	app.use('/auth/file*', fileCheck);
+	app.use('/auth/file/:id*', fileCheck);
+	app.get('/auth/file/:fid/getheaders', fileService.getHeaders);
 	app.get('/auth/file/getheaders', fileService.getHeaders);
 	app.post('/auth/file/map', fileService.map);
-	app.post('/auth/file/saveinvoices', invoiceService.save);
+	app.post('/auth/file/saveinvoices', invoiceService.saveInvoices);
 	app.get('/auth/history', invoiceService.history);
 
 	app.get('*', function(req, res) {

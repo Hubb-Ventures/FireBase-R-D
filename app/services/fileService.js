@@ -29,6 +29,7 @@ function invoice(invoiceNumber, customerName, amount, gst, amountWGST) {
 }
 
 module.exports.getHeaders = function(req,res) {
+	console.log("service", req.params);
 	var promise = Files.findById(req.headers['fid']).exec();
 	promise.then(function(file) {
 		var array = new Array();
