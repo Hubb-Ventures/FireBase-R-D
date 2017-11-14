@@ -1,40 +1,60 @@
-let	Users = require('../db/models/users');
+let	Invoices = require('../db/models/invoices'),
+	Files = require('../db/models/files');
 
-module.exports.addLog = function(req, res) {
-	let invoiceLog = new InvoiceLogs();
+let userService = require('./userService');
 
-	invoiceLog.period = req.body.period;
+let mongoose = require('mongoose'),
+	Promise = require('bluebird'),
+	async = require('async');
 
-	Users.find({ email: req.body.email }, function(err, users) {
-		if(err) {
-			console.log(err);
-		}
-		else {
-			invoiceLog.userID = users[0]._id;
-		}
-	});
+mongoose.Promise = Promise;
 
-	Companies.find({ companyName: req.body.cname }, function(err, companies) {
-		if(err) {
-			console.log(err);
-		}
-		else {
-			invoiceLog.companyID = companies[0]._id;
-		}
-	});
+module.exports.history = function(req, res) {
+	if (req.user) {
+		var userInvoices = [];
+		userService.getFiles(req.user._id)
+		.then(function(files) {
+			async.forEach(files, function(item, callback) {
+				let invoicePromise = Invoices.find({ fileId: item._id }).exec();
+				invoicePromise.then(function(invoices) {
+					userInvoices = userInvoices.concat(invoices);
+				})
+				.then(function() {
+					callback();
+				});
+			}, (err) => {
+				if(!err) {
+					res.status(200).send(userInvoices);
+				}
+				else {
+					consoe.log(err);
+					res.status(500).send({"msg": "Something is wrong with the system. try again later."});
+				}
+			});
+		});
+	}
+	else {
+		res.status(400).send({"msg": "No user ID was specified."});
+	}
+}
 
-	invoiceLog.save(function(err) {
-		if(err){
-			if(err.name === 'MongoError' && err.code === 11000) {
-				return res.status(200).send({"msg":"Account exists!"});
+module.exports.saveInvoices = function(req, res) {
+	var mappedInvoices = JSON.parse(req.body.Invoices);
+	mappedInvoices.forEach( function(invoice) {
+		// console.log(invoice);
+		let inv = new Invoices();
+		inv.fileId = req.headers['fid'];
+		inv.processedAt = Date.now();
+		inv.invoiceNumber = invoice.invoiceNumber;
+		inv.customerName = invoice.customerName;
+		inv.amount = invoice.amount;
+		inv.gst = invoice.gst;
+		inv.amountWGST = invoice.amountWGST;
+		inv.save(function(err) {
+			if(err) {
+				console.log(err);
 			}
-			else {
-				console.log(err.message);
-				return res.status(500).send({"msg": "Internal error!"});
-			}
-		}
-		else {
-			res.status(200).send({"msg": "Successfully added Invoice Log."});
-		}
+		});
 	});
+	res.status(200).send({"msg": "Successfully saved "+ mappedInvoices.length +" invoices."});
 }

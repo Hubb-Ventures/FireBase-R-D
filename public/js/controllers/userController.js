@@ -4,7 +4,7 @@
 
 
     app.controller('userCtrl', function($scope, $http, $location) {
-
+        toastr.options.positionClass = 'toast-bottom-right';
         $scope.user = function() {
             
             // var obj = {};
@@ -16,7 +16,7 @@
                 password: $scope.passwrd
             };
 
-
+            
             //console.log(body);
             $http({
                     url: "http://localhost:3000/login",
@@ -31,18 +31,24 @@
                        // console.log(response.data);
 
                         
-                        var uid =[];
-                        uid.push(response.data);
-                        localStorage.setItem("uid", JSON.stringify(uid));
-                        uid = JSON.parse(localStorage.getItem("uid"));
-                       
+                        // var uid =[];
+                        let data = response.data;
+                        //console.log(data.token);
+                        // uid.push(response.data);
+                        localStorage.setItem("tokenid", data.token);
+                        let tokenid = localStorage.getItem("tokenid");
                         //$window.uid = response.data;
                         $location.path("/attachFile");
-                         //console.log(uid[0].uid);
+                        toastr.success('Welcome ', 'Login Successful',{
+                            closeButton: true
+                           
+                        });
+                        // console.log(uid);
                     },
                     function(error) {
                         console.log(error);
-                    });
+                        toastr.error('Your credentials are Wrong', 'Error');
+                });
         }
 
     });

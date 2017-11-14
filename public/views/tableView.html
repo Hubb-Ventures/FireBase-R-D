@@ -8,7 +8,17 @@
     </tr>
 </table> -->
 
- <div id="grid2" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
-
+<div id="grid2" ui-grid="gridOptions" ui-grid-edit  ui-grid-pagination class="grid"></div>
 <br>
-<input type='button' id='btnLoad' class="btn btn-default" value='Save'>
+ 	<!-- <button type="button" class="btn btn-default" ng-click="gridApi.pagination.previousPage()">
+        1
+      </button>
+      <button type="button" class="btn btn-default" ng-click="gridApi.pagination.nextPage()">
+        2
+      </button> -->
+     <!--  <button type="button" class="btn btn-success" ng-click="gridApi.pagination.seek(3)">
+        go to page 3
+      </button> -->
+<br>
+<br>
+<input type='button' id='btnLoad' class="btn btn-default" value='Save' ng-click="save()">

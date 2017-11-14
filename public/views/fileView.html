@@ -1,7 +1,7 @@
 <form class = "form-group" enctype="multipart/form-data" id = "uploadForm">
 	<h1 class = "form1h">File Input</h1>
 	<div class = "inputForm">
-	<input type="file" class="form-control-file" file-model="myFile"/ ngf-pattern="'.xls,.csv,.xlsx'" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="angular.element(this).scope().setFile(this)" > {{FileMessage}}
+	<input type="file" class="form-control-file" file-model="myFile"/ ngf-pattern="'.xls,.csv,.xlsx'" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onchange="angular.element(this).scope().setFile(this)" > 
 	<br>
 	<small id="fileHelp" class="form-text text-muted">Accepts only csv , xlsx , xls files </small>
 	<br><br>

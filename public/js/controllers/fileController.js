@@ -22,28 +22,25 @@
 
     app.service('fileUpload', ['$http', '$location', function($http, $location) {
 
-        this.uploadFileToUrl = function(file, Uid, uploadUrl) {
+        this.uploadFileToUrl = function(file, tokenid, uploadUrl) {
             var formData = new FormData();
             formData.append('userFile', file);
-            formData.append('uid', Uid);
-            // console.log(Object.values(uid));
-            // console.log(formData);
-
 
             $http.post(uploadUrl, formData, {
-                    headers: { 'Content-Type': undefined }
+                    headers: { 'Content-Type': undefined,
+                    'access-token': tokenid }
                 })
                 .then(function mySuccess(response) {
-                    //console.log(response.data);
-                        var fid =[];
-                        fid.push(response.data);
-                        localStorage.setItem("fid", JSON.stringify(fid));
-                        fid = JSON.parse(localStorage.getItem("fid"));
-                        //console.log(fid[0].fid);
-                        $location.path("/page2");
+                    let data = response.data;
+                    localStorage.setItem("fid", data.fid);
+                    let fid = localStorage.getItem("fid");
+                    toastr.info('File Uploaded Successfully', 'Notice');
+                    $location.path("/page2");
+
 
                 }, function myError(response) {
                     console.log(response);
+                    toastr.error('File Cannot be Uploaded', 'Error');
                 });
 
         }
@@ -75,12 +72,10 @@
         //uploading file
         $scope.uploadFile = function() {
             var file = $scope.myFile;
-            var uid = JSON.parse(localStorage.getItem("uid"));
-            //console.log(uid);
-            var Uid = uid[0].uid;
-            var uploadUrl = "http://localhost:3000/upload/file";
-            //console.log(Uid);
-            fileUpload.uploadFileToUrl(file, Uid, uploadUrl);
+            let tokenid = localStorage.getItem("tokenid");
+            var uploadUrl = "http://localhost:3000/auth/upload/file";
+            //console.log(tokenid);
+            fileUpload.uploadFileToUrl(file, tokenid, uploadUrl);
         };
 
     }]);

@@ -20,7 +20,16 @@ function bufferToStream(buffer) {
 	return stream;
 }
 
+function invoice(invoiceNumber, customerName, amount, gst, amountWGST) {
+	this.invoiceNumber = invoiceNumber;
+	this.customerName = customerName;
+	this.amount = amount;
+	this.gst = gst;
+	this.amountWGST = amountWGST;
+}
+
 module.exports.getHeaders = function(req,res) {
+	console.log("service", req.params);
 	var promise = Files.findById(req.headers['fid']).exec();
 	promise.then(function(file) {
 		var array = new Array();
@@ -44,7 +53,8 @@ module.exports.getHeaders = function(req,res) {
 }
 
 module.exports.map = function(req, res) {
-	console.log(req.body);
+	let mappedValues = [];
+
 	var promise = Files.findById(req.body.fid).exec();
 	promise.then(function(file) {
 		workbook.xlsx.read(bufferToStream(file.data))
@@ -52,41 +62,33 @@ module.exports.map = function(req, res) {
 				var worksheet = workbook.getWorksheet(1);
 				worksheet.eachRow(function(row, rowNumber) {
 					if (rowNumber > 1) {
-						let invoice = new Invoices();
-						invoice.fileId = req.body.fid;
-						invoice.invoiceNumber = row.getCell(Number(req.body.invNum));
-						invoice.customerName = row.getCell(Number(req.body.cname));
-						invoice.processedAt = Date.now();
-						invoice.amount = row.getCell(Number(req.body.amt));
-						invoice.gst = row.getCell(Number(req.body.gst));
-						invoice.amountWGST = row.getCell(Number(req.body.agst));
-						invoice.save(function(err) {
-							if(err) {
-								throw err;
-							}
-							else {
-								console.log("Invoice generated.");
-							}
-						})
+						let inv = new invoice(row.getCell(Number(req.body.invNum)).value, row.getCell(Number(req.body.cname)).value, row.getCell(Number(req.body.amt)).value, row.getCell(Number(req.body.gst)).value, row.getCell(Number(req.body.agst)).value);
+						mappedValues.push(inv);
+						// let invoice = new Invoices();
+						// invoice.fileId = req.body.fid;
+						// invoice.invoiceNumber = row.getCell(Number(req.body.invNum));
+						// invoice.customerName = row.getCell(Number(req.body.cname));
+						// invoice.processedAt = Date.now();
+						// invoice.amount = row.getCell(Number(req.body.amt));
+						// invoice.gst = row.getCell(Number(req.body.gst));
+						// invoice.amountWGST = row.getCell(Number(req.body.agst));
+						// console.log(invoice);
+						// invoice.save(function(err) {
+						// 	if(err) {
+						// 		throw err;
+						// 	}
+						// 	else {
+						// 		console.log("Invoice generated.");
+						// 	}
+						// })
 					}
 				});
-				res.status(200).send({"msg": "The values have been mapped."});
+				res.status(200).send(mappedValues);
 			})
 			.catch(function(err) {
 				console.log(err);
 				res.status(500).send({"msg": "Something is wrong with the system, try again later."});
 			});
-	})
-	.catch(err => {
-		console.log(err);
-		res.status(500).send({"msg": "Something is wrong with the system, try again later."})
-	})
-}
-
-module.exports.sendMap = function(req, res) {
-	var promise = Invoices.find({fileId: req.headers['fid']}).exec();
-	promise.then(function(files) {
-		res.status(200).send(files);
 	})
 	.catch(err => {
 		console.log(err);

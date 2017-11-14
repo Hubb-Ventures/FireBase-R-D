@@ -1,6 +1,11 @@
-let Users = require('../db/models/users');
+let Users = require('../db/models/users'),
+	Files = require('../db/models/files');
 
-let jwt = require('jsonwebtoken');
+let jwt = require('jsonwebtoken'),
+	mongoose = require('mongoose'),
+	Promise = require('bluebird');
+
+mongoose.Promise = Promise;
 
 module.exports.signup = function(req, res) {
 	let user = new Users();
@@ -35,16 +40,25 @@ module.exports.login = function(req, res) {
 					var response = {user: users[0].toJSON()};
 					var token = jwt.sign(response,process.env.SECRET);
 					response.token = token;
-					delete response.user.password;
-					res.status(200).send({"uid":response.user._id});
+					delete response.user;
+					res.status(200).send(response);
 				}
 				else {
-					res.status(401).send({"msg": "Invalid details."});
+					res.status(401).send({"msg": "The password doesn't match."});
 				}
 			}
 			else {
-				res.status(401).send({"msg": "Invalid details."});
+				res.status(401).send({"msg": "The email doesn't exist in our records."});
 			}
 		})
 	}
+}
+
+module.exports.getFiles = function(uid) {
+	return new Promise(function(resolve, reject) {
+		let promise = Files.find({ userId: uid }).exec();
+		promise.then(function(files) {
+			resolve(files);
+		});
+	});
 }

@@ -2,7 +2,7 @@
     'use strict';
     var app = angular.module("myApp");
 
-    app.controller('myCtrl', function($scope, $http, $location) {
+    app.controller('myCtrl', ['$scope', '$http', '$location', 'Test', function($scope, $http, $location, Test) {
 
         // console.log($window.my_value);
         // console.log($window.fid);
@@ -11,24 +11,27 @@
         //console.log(Object.values(accessid)[0]);
         // var fileid = $window.fid;
         //console.log(Object.values(fileid)[0]);
-        var uid = JSON.parse(localStorage.getItem("uid"));
-        var fid = JSON.parse(localStorage.getItem("fid"));
+        var tokenid =localStorage.getItem("tokenid");
+        var fid = localStorage.getItem("fid");
         
         let header = {
-            'access-id': uid[0].uid,
-            'fid': fid[0].fid
+            'access-token': tokenid,
+            'fid': fid
         };
 
         $http({
             method: "GET",
-            url: "http://localhost:3000/file/getHeaders",
+            url: "http://localhost:3000/auth/file/getHeaders",
             headers: header,
         }).then(function mySuccess(response) {
             $scope.headers = response.data;
+            // toastr.info('Headers are available', 'Information');
             //console.log($scope.headers);
         }, function myError(response) {
             //console.info("ERROR Occurrd");
             $scope.names = response.statusText;
+            toastr.error('Headers are not available', 'Error');
+
         });
 
 
@@ -81,31 +84,37 @@
             //console.log($scope.array);
         var headerValues = {};
         $scope.data = function() {
-            headerValues.uid = uid[0].uid;
+            headerValues.token = tokenid;
             headerValues[$scope.labels[0]] = select1;
             headerValues[$scope.labels[1]] = select2;
             headerValues[$scope.labels[2]] = select3;
             headerValues[$scope.labels[3]] = select4;
             headerValues[$scope.labels[4]] = select5;
-            headerValues.fid = fid[0].fid;
+            headerValues.fid = fid;
 
+            let promise = Test.map(angular.toJson(headerValues));
+            promise.then(function(data) {
+                $location.path("/page3");
+                toastr.success('Values are mapped', 'Success');
+                //console.log(data);
+            });
            // console.log(headerValues);
-            $http({
-                    url: "http://localhost:3000/file/map",
-                    method: "POST",
-                    data: angular.toJson(headerValues),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(function(success) {
-                    console.log("successful");
-                    $location.path("/page3");
-                }, function(error) {
-                    console.log(error);
-                });
+            // $http({
+            //         url: "http://localhost:3000/auth/file/map",
+            //         method: "POST",
+            //         data: angular.toJson(headerValues),
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         }
+            //     })
+            //     .then(function(success) {
+            //         console.log("successful");
+            //         $location.path("/page3");
+            //     }, function(error) {
+            //         console.log(error);
+            //     });
         }
 
-    });
+    }]);
 
 })();
