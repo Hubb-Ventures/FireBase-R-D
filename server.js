@@ -32,18 +32,21 @@ db.once('open', function() {
 		console.log('CSV app running on port '+ port);
 	});
 
+	app.param("fid", function(req, res, next, fid) {
+		req.fid = fid;
+		next();
+	});
+
 	app.post('/signup', userService.signup);
 	app.post('/login', userService.login);
 	app.use('/auth*', tokenAuth);
 	app.use('/auth/upload*', upload);
 	app.post('/auth/upload/file', uploadService.upload);
-	app.use('/auth/file*', fileCheck);
-	app.use('/auth/file/:id*', fileCheck);
+	app.use('/auth/file/:fid*', fileCheck);
 	app.get('/auth/file/:fid/getheaders', fileService.getHeaders);
-	app.get('/auth/file/getheaders', fileService.getHeaders);
-	app.post('/auth/file/map', fileService.map);
-	app.post('/auth/file/saveinvoices', invoiceService.saveInvoices);
-	app.get('/auth/history', invoiceService.history);
+	app.post('/auth/file/:fid/map', fileService.map);
+	app.post('/auth/file/:fid/saveinvoices', invoiceService.saveInvoices);
+	app.get('/auth/history', userService.history);
 
 	app.get('*', function(req, res) {
 		res.sendFile(__dirname + '/public/index.html');

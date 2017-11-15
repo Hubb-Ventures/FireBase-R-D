@@ -29,8 +29,7 @@ function invoice(invoiceNumber, customerName, amount, gst, amountWGST) {
 }
 
 module.exports.getHeaders = function(req,res) {
-	console.log("service", req.params);
-	var promise = Files.findById(req.headers['fid']).exec();
+	var promise = Files.findById(req.fid).exec();
 	promise.then(function(file) {
 		var array = new Array();
 		workbook.xlsx.read(bufferToStream(file.data))
@@ -55,7 +54,7 @@ module.exports.getHeaders = function(req,res) {
 module.exports.map = function(req, res) {
 	let mappedValues = [];
 
-	var promise = Files.findById(req.body.fid).exec();
+	var promise = Files.findById(req.fid).exec();
 	promise.then(function(file) {
 		workbook.xlsx.read(bufferToStream(file.data))
 			.then(function() {
@@ -63,24 +62,18 @@ module.exports.map = function(req, res) {
 				worksheet.eachRow(function(row, rowNumber) {
 					if (rowNumber > 1) {
 						let inv = new invoice(row.getCell(Number(req.body.invNum)).value, row.getCell(Number(req.body.cname)).value, row.getCell(Number(req.body.amt)).value, row.getCell(Number(req.body.gst)).value, row.getCell(Number(req.body.agst)).value);
+						for( prop in inv) {
+							console.log(inv[prop])
+							if(typeof(inv[prop]) === 'object') {
+								if(inv[prop].text) {
+									inv[prop] = inv[prop].text;
+								}
+								else {
+									inv[prop] = inv[prop];
+								}
+							}
+						}
 						mappedValues.push(inv);
-						// let invoice = new Invoices();
-						// invoice.fileId = req.body.fid;
-						// invoice.invoiceNumber = row.getCell(Number(req.body.invNum));
-						// invoice.customerName = row.getCell(Number(req.body.cname));
-						// invoice.processedAt = Date.now();
-						// invoice.amount = row.getCell(Number(req.body.amt));
-						// invoice.gst = row.getCell(Number(req.body.gst));
-						// invoice.amountWGST = row.getCell(Number(req.body.agst));
-						// console.log(invoice);
-						// invoice.save(function(err) {
-						// 	if(err) {
-						// 		throw err;
-						// 	}
-						// 	else {
-						// 		console.log("Invoice generated.");
-						// 	}
-						// })
 					}
 				});
 				res.status(200).send(mappedValues);
